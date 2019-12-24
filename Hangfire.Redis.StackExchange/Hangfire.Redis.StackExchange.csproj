@@ -4,8 +4,8 @@
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <PackageId>Hangfire.Redis.StackExchange</PackageId>
     <IsPackable>true</IsPackable>
-    <Version>1.8.1-beta</Version>
-    <PackageVersion>1.8.1</PackageVersion>
+    <Version>1.8.2-beta</Version>
+    <PackageVersion>1.8.2</PackageVersion>
     <Authors>Marco Casamento and contributors</Authors>
     <owners>marcocasamento</owners>
     <!--
@@ -24,7 +24,7 @@
       It also supports Batches (Pro Feature)
     </Summary>
     <PackageReleaseNotes>
-      1.8.1
+      1.8.2
       - 修复线程安全的BUG
       - 不支持 .net461
       1.8.0
