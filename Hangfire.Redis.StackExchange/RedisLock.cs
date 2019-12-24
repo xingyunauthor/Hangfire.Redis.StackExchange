@@ -52,18 +52,7 @@ namespace Hangfire.Redis
         }
 #endif
         
-        private static AsyncLocal<ConcurrentDictionary<RedisKey, RedisKey>> _heldLocks = new AsyncLocal<ConcurrentDictionary<RedisKey, RedisKey>>();
-
-        private static ConcurrentDictionary<RedisKey, RedisKey> HeldLocks
-        {
-            get
-            {
-                var value = _heldLocks.Value;
-                if (value == null)
-                    _heldLocks.Value = value = new ConcurrentDictionary<RedisKey, RedisKey>();
-                return value;
-            }
-        }
+        private static ConcurrentDictionary<RedisKey, RedisKey> HeldLocks => new ConcurrentDictionary<RedisKey, RedisKey>();
 
         private readonly IDatabase _redis;
         private readonly RedisKey _key;
@@ -79,7 +68,8 @@ namespace Hangfire.Redis
 
             if (holdsLock)
             {
-                HeldLocks.TryAdd(_key, _key);
+                if (!HeldLocks.TryAdd(_key, _key))
+                    return;
 
                 // start sliding expiration timer at half timeout intervals
                 var halfLockHoldDuration = TimeSpan.FromTicks(holdDuration.Ticks / 2);
